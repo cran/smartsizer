@@ -1,7 +1,7 @@
 Package: smartsizer
 Type: Package
 Title: Power Analysis for a SMART Design
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: person("William", "Artman", email = "William_Artman@URMC.Rochester.edu", role = c("aut", "cre"))
 Description: A set of tools for determining the necessary sample size
     in order to identify the optimal dynamic treatment regime
@@ -18,8 +18,8 @@ RoxygenNote: 6.0.1
 Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-04-13 13:08:45 UTC; Willi
+Packaged: 2018-04-27 15:57:50 UTC; Willi
 Author: William Artman [aut, cre]
 Maintainer: William Artman <William_Artman@URMC.Rochester.edu>
 Repository: CRAN
-Date/Publication: 2018-04-16 09:04:09 UTC
+Date/Publication: 2018-04-27 16:22:16 UTC

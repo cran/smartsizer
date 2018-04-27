@@ -73,7 +73,7 @@ computeC <- function(V, mc_list_SVD, alpha = 0.05) {
   #  An nrow(V) length vector of c'i (quantiles) averaged 500 times.
   c_alpha <- rep.int(0,nrow(V))
   for (i in 1:500) {
-    c_alpha <- c_alpha + getOneC(V, Z = mc_list_SVD[[i]])
+    c_alpha <- c_alpha + getOneC(V, Z = mc_list_SVD[[i]], alpha)
   }
   c_alpha <- c_alpha/500
   c_alpha
