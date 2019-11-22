@@ -4,36 +4,35 @@ author: "William J Artman"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{my-vignette}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
+  %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-
-```{r, message = FALSE, results = 'hide', include = FALSE}
-library("smartsizer")
+```{r setup}
+library(smartsizer)
 ```
 
-#Introduction
-The smartsizer package is designed to assist investigators who are planning sequential, multiple assignment, randomized trials (SMART) in determining the sample size of individuals to enroll. The main goal motivating SMART designs is determination of optimal dynamic treatment regime (DTR). Therefore, investigators are interested in sizing SMARTs based on the ability to screen out DTRs inferior to the best by a specified amount $\Delta_{\mathrm{min}}$ with probability $1-\beta$ while identifying the true best with a specified probability $1-\alpha$. The smartsizer package utilizes the Multiple Comparisons with the Best (MCB) methodology for determining a set of best DTRs while adjusting for multiple comparisons. 
+# Introduction
+The $\texttt{smartsizer}$ package is designed to assist investigators who are planning sequential, multiple assignment, randomized trials (SMART) in determining the sample size of individuals to enroll. The main goal motivating SMART designs is determination of optimal dynamic treatment regime (DTR). Therefore, investigators are interested in sizing SMARTs based on the ability to screen out DTRs inferior to the best by a specified amount $\Delta_{\mathrm{min}}$ with probability $1-\beta$ while identifying the true best with a specified probability $1-\alpha$. The $\texttt{smartsizer}$ package utilizes the Multiple Comparisons with the Best (MCB) methodology for determining a set of best DTRs while adjusting for multiple comparisons. 
 
-Using smartsizer, investigators may perform power analyses for an arbitrary type of SMART.
+Using $\texttt{smartsizer}$, investigators may perform power analyses for an arbitrary type of SMART.
 
-#Power Calculation
+$\textbf{Note:}$ there is a Shiny app available implementing the basic functionalities of this package: https://wilart.shinyapps.io/smartsizer-power-sample-size/.
 
+Details on the methodology and guidelines for choosing the covariance matrix are available in ''W.J. Artman, I. Nahum-Shani, T. Wu, J.R. Mckay, and A. Ertefaie. Power analysis in a SMART design: sample size estimation for determining the best embedded dynamic treatment regime. Biostatistics, 2018'' (https://doi.org/10.1093/biostatistics/kxy064).
+
+# Power Calculation
 The $\texttt{computePower}$ function computes the power as a function of the given covariance matrix, effect sizes, type I error rate, and sample size. The power is the probability of excluding from the set of best all embedded DTR (EDTR) which are inferior to the true best DTR by $\Delta_{\mathrm{min}}$ or more.   
 
-##Power Function Arguments
-
+# Power Function Arguments
 The arguments of the $\texttt{computePower}$ function are as follows:  
 1. $\texttt{V}$: the covariance matrix of mean EDTR outcome estimators.  
 2. $\texttt{Delta}$: the vector of effect sizes.  
@@ -43,7 +42,7 @@ The arguments of the $\texttt{computePower}$ function are as follows:
 
 
 
-##Power Calculation Examples
+## Power Calculation Examples
 We will now look at how to use the computePower function. Consider the following covariance matrices:
 
 ```{r}
@@ -71,11 +70,10 @@ computePower(V2, Delta2, min_Delta2, alpha = 0.05, sample_size = 250)
 ```
 We see that the power is 83% in the first example and 64% in the second.
 
-#Sample Size Estimation
-
+# Sample Size Estimation
 The $\texttt{computeSampleSize}$ function estimates the minimum number of individuals that need to be enrolled in order to achieve a specified power. <br/>
 
-##Sample Size Function Arguments
+## Sample Size Function Arguments
 The arguments of the `computeSampleSize` function are as follows:  
 1. $\texttt{V}$: the covariance matrix of mean EDTR outcome estimators.    
 2. $\texttt{Delta}$: the vector of effect sizes.  
@@ -83,8 +81,7 @@ The arguments of the `computeSampleSize` function are as follows:
 4. $\texttt{alpha}$: the type I error rate (less than 0.5 and greater than 0).  
 5. $\texttt{power}$: the desired power.  
 
-##Sample Size Estimation Examples
-
+## Sample Size Estimation Examples
 We will look at the same example as in the power calculation. Let
 ```{r}
 V1 <- diag(6)
@@ -110,8 +107,7 @@ The sample size in the first example is the minimum number of individuals which 
 <br/>
 Consequently, 114 individuals need to be enrolled in the first example and 347 individuals need to be enrolled in the second example in order to achieve 80% power.
 
-#Computing the Power Over a Grid of Sample Sizes
-
+# Computing the Power Over a Grid of Sample Sizes
 We now demonstrate the $\texttt{computePowerBySampleSize}$ and $\texttt{plotPowerByN}$ functions.
 
 <br/> $\texttt{computePowerBySampleSize}$ computes the power over a grid of sample size values.
@@ -123,7 +119,7 @@ computePowerBySampleSize(V2, Delta2, min_Delta2, alpha = 0.05, sample_size_grid 
 
 <br/>
 
-##Creating Power Plots
+## Creating Power Plots
 The $\texttt{plotPowerByN}$ function plots the power vs. the sample size over a grid of sample size values. The following two example plots demonstrate the function. The power is computed using common random variables to reduce the variance and to speed up generation of the plots.
 
 ```{r, fig.width = 5, fig.height = 5}
@@ -133,3 +129,10 @@ plotPowerByN(V1, Delta1, min_Delta1, alpha = 0.05, sample_size_grid = seq(50, 20
 ```{r, fig.width = 5, fig.height = 5}
 plotPowerByN(V2, Delta2, min_Delta2, alpha = 0.05, sample_size_grid = seq(50, 500, 50), color = "blue")
 ```
+
+
+## Acknowledgements
+Special thanks to Tingting Zhan for discovering a bug in $\texttt{computePowerBySampleSize}$.
+
+## Notes
+Please cite ''W.J. Artman, I. Nahum-Shani, T. Wu, J.R. Mckay, and A. Ertefaie. Power analysis in a SMART design: sample size estimation for determining the best embedded dynamic treatment regime. Biostatistics, 2018.'' if you use this package.

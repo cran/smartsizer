@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="William J Artman" />
+
+<meta name="date" content="2019-11-21" />
+
+<title>Using the smartsizer Package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using the smartsizer Package</h1>
+<h4 class="author">William J Artman</h4>
+<h4 class="date">2019-11-21</h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(smartsizer)</a></code></pre></div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The <span class="math inline">\(\texttt{smartsizer}\)</span> package is designed to assist investigators who are planning sequential, multiple assignment, randomized trials (SMART) in determining the sample size of individuals to enroll. The main goal motivating SMART designs is determination of optimal dynamic treatment regime (DTR). Therefore, investigators are interested in sizing SMARTs based on the ability to screen out DTRs inferior to the best by a specified amount <span class="math inline">\(\Delta_{\mathrm{min}}\)</span> with probability <span class="math inline">\(1-\beta\)</span> while identifying the true best with a specified probability <span class="math inline">\(1-\alpha\)</span>. The <span class="math inline">\(\texttt{smartsizer}\)</span> package utilizes the Multiple Comparisons with the Best (MCB) methodology for determining a set of best DTRs while adjusting for multiple comparisons.</p>
+<p>Using <span class="math inline">\(\texttt{smartsizer}\)</span>, investigators may perform power analyses for an arbitrary type of SMART.</p>
+<p><span class="math inline">\(\textbf{Note:}\)</span> there is a Shiny app available implementing the basic functionalities of this package: <a href="https://wilart.shinyapps.io/smartsizer-power-sample-size/" class="uri">https://wilart.shinyapps.io/smartsizer-power-sample-size/</a>.</p>
+<p>Details on the methodology and guidelines for choosing the covariance matrix are available in ‘’W.J. Artman, I. Nahum-Shani, T. Wu, J.R. Mckay, and A. Ertefaie. Power analysis in a SMART design: sample size estimation for determining the best embedded dynamic treatment regime. Biostatistics, 2018’’ (<a href="https://doi.org/10.1093/biostatistics/kxy064" class="uri">https://doi.org/10.1093/biostatistics/kxy064</a>).</p>
+</div>
+<div id="power-calculation" class="section level1">
+<h1>Power Calculation</h1>
+<p>The <span class="math inline">\(\texttt{computePower}\)</span> function computes the power as a function of the given covariance matrix, effect sizes, type I error rate, and sample size. The power is the probability of excluding from the set of best all embedded DTR (EDTR) which are inferior to the true best DTR by <span class="math inline">\(\Delta_{\mathrm{min}}\)</span> or more.</p>
+</div>
+<div id="power-function-arguments" class="section level1">
+<h1>Power Function Arguments</h1>
+<p>The arguments of the <span class="math inline">\(\texttt{computePower}\)</span> function are as follows:<br />
+1. <span class="math inline">\(\texttt{V}\)</span>: the covariance matrix of mean EDTR outcome estimators.<br />
+2. <span class="math inline">\(\texttt{Delta}\)</span>: the vector of effect sizes.<br />
+3. <span class="math inline">\(\texttt{min_Delta}\)</span>: the minimum detectable effect size.<br />
+4. <span class="math inline">\(\texttt{alpha}\)</span>: the type I error rate (less than 0.5 and greater than 0).<br />
+5. <span class="math inline">\(\texttt{sample_size}\)</span>: the number of individuals enrolled in the SMART.</p>
+<div id="power-calculation-examples" class="section level2">
+<h2>Power Calculation Examples</h2>
+<p>We will now look at how to use the computePower function. Consider the following covariance matrices:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">V1 &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2">V2 &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">0.2</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="kw">c</span>(<span class="dv">0</span> , <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<p><span class="math inline">\(\texttt{V1}\)</span> corresponds to a SMART in which there are six EDTRs. <span class="math inline">\(\texttt{V2}\)</span> corresponds to a SMART in which there are four EDTRs.</p>
+<p>Let the vector of effect sizes be</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">Delta1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">min_Delta1 &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4">Delta2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5">min_Delta2 &lt;-<span class="st"> </span><span class="fl">0.2</span></a></code></pre></div>
+<p>In both Delta1 and Delta2, we are assuming the first DTR is best. For Delta1 we are being as conservative as possible by assuming all other DTRs are the minimum detectable effect size away. In the first example, the power is the probability of excluding all EDTRs 0.5 away from the first EDTR or more. In particular, the power is the probability of excluding <span class="math inline">\(\mathrm{EDTR}_2,...,\mathrm{EDTR}_6\)</span>.<br />
+<br />In the second example, we have information that some of the effect sizes are further away from the best than than the min detectable effect size which yields greater power. The power is the probability of excluding <span class="math inline">\(\mathrm{EDTR}_2,\mathrm{EDTR}_3,\mathrm{EDTR}_4\)</span> from the set of best.</p>
+<p>We assume the type I error rate to be at most <span class="math inline">\(0.05\)</span> so that the best DTR is included in the set of best with probability at least <span class="math inline">\(1-\alpha\)</span>. The power is computed as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">computePower</span>(V1, Delta1, min_Delta1, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">sample_size =</span> <span class="dv">120</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] 0.83</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">computePower</span>(V2, Delta2, min_Delta2, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">sample_size =</span> <span class="dv">250</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; [1] 0.64</span></a></code></pre></div>
+<p>We see that the power is 83% in the first example and 64% in the second.</p>
+</div>
+</div>
+<div id="sample-size-estimation" class="section level1">
+<h1>Sample Size Estimation</h1>
+<p>The <span class="math inline">\(\texttt{computeSampleSize}\)</span> function estimates the minimum number of individuals that need to be enrolled in order to achieve a specified power. <br /></p>
+<div id="sample-size-function-arguments" class="section level2">
+<h2>Sample Size Function Arguments</h2>
+<p>The arguments of the <code>computeSampleSize</code> function are as follows:<br />
+1. <span class="math inline">\(\texttt{V}\)</span>: the covariance matrix of mean EDTR outcome estimators.<br />
+2. <span class="math inline">\(\texttt{Delta}\)</span>: the vector of effect sizes.<br />
+3. <span class="math inline">\(\texttt{min_Delta}\)</span>: the minimum detectable effect size.<br />
+4. <span class="math inline">\(\texttt{alpha}\)</span>: the type I error rate (less than 0.5 and greater than 0).<br />
+5. <span class="math inline">\(\texttt{power}\)</span>: the desired power.</p>
+</div>
+<div id="sample-size-estimation-examples" class="section level2">
+<h2>Sample Size Estimation Examples</h2>
+<p>We will look at the same example as in the power calculation. Let</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">V1 &lt;-<span class="st"> </span><span class="kw">diag</span>(<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">V2 &lt;-<span class="st"> </span><span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="fl">0.2</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="kw">c</span>(<span class="fl">0.2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="kw">c</span>(<span class="dv">0</span> , <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.2</span>), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="fl">0.2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<p>Assume the vector of effect sizes are</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">Delta1 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">min_Delta1 &lt;-<span class="st"> </span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4">Delta2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">1.5</span>)</a>
+<a class="sourceLine" id="cb6-5" title="5">min_Delta2 &lt;-<span class="st"> </span><span class="fl">0.2</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">computeSampleSize</span>(V1, Delta1, min_Delta1, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">desired_power =</span> <span class="fl">0.8</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; [1] 113</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">computeSampleSize</span>(V2, Delta2, min_Delta2, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">desired_power =</span> <span class="fl">0.8</span>)</a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; [1] 345</span></a></code></pre></div>
+<p>The sample size in the first example is the minimum number of individuals which need to be enrolled in order achieve 80% power of excluding <span class="math inline">\(\mathrm{EDTR}_2,\mathrm{EDTR}_3,\mathrm{EDTR}_4,\mathrm{EDTR}_5, \text{ and }\mathrm{EDTR}_6\)</span> from the set of best.</p>
+<p><br />The second example computes the minimum number of individuals which need to be enrolled in order to achieve 80% power to exclude <span class="math inline">\(\mathrm{EDTR}_2,\mathrm{EDTR}_3, \text{ and }\mathrm{EDTR}_4\)</span>.<br />
+<br /> Consequently, 114 individuals need to be enrolled in the first example and 347 individuals need to be enrolled in the second example in order to achieve 80% power.</p>
+</div>
+</div>
+<div id="computing-the-power-over-a-grid-of-sample-sizes" class="section level1">
+<h1>Computing the Power Over a Grid of Sample Sizes</h1>
+<p>We now demonstrate the <span class="math inline">\(\texttt{computePowerBySampleSize}\)</span> and <span class="math inline">\(\texttt{plotPowerByN}\)</span> functions.</p>
+<p><br /> <span class="math inline">\(\texttt{computePowerBySampleSize}\)</span> computes the power over a grid of sample size values.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">computePowerBySampleSize</span>(V1, Delta1, min_Delta1, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">sample_size_grid =</span> <span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">200</span>, <span class="dv">25</span>))</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; [1] 0.26 0.51 0.72 0.86 0.93 0.97 0.99</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">computePowerBySampleSize</span>(V2, Delta2, min_Delta2, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">sample_size_grid =</span> <span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">500</span>, <span class="dv">50</span>))</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;  [1] 0.10 0.23 0.38 0.52 0.64 0.73 0.81 0.86 0.90 0.93</span></a></code></pre></div>
+<p><br /></p>
+<div id="creating-power-plots" class="section level2">
+<h2>Creating Power Plots</h2>
+<p>The <span class="math inline">\(\texttt{plotPowerByN}\)</span> function plots the power vs. the sample size over a grid of sample size values. The following two example plots demonstrate the function. The power is computed using common random variables to reduce the variance and to speed up generation of the plots.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">plotPowerByN</span>(V1, Delta1, min_Delta1, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">sample_size_grid =</span> <span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">200</span>, <span class="dv">25</span>), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">plotPowerByN</span>(V2, Delta2, min_Delta2, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">sample_size_grid =</span> <span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">500</span>, <span class="dv">50</span>), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAHgCAMAAABKCk6nAAAAwFBMVEUAAAAAADoAAGYAAP8AOjoAOmYAOpAAZmYAZpAAZrY6AAA6ADo6AGY6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kLY6kNtmAABmADpmOgBmOjpmkJBmkLZmkNtmtrZmtttmtv+QOgCQZgCQZjqQkDqQkGaQkLaQtpCQttuQtv+Q27aQ2/+2ZgC2Zjq2kGa225C227a229u22/+2/9u2///bkDrbkGbbtmbbtpDb27bb29vb////tmb/25D/27b//7b//9v///8NIMgDAAAACXBIWXMAAA7DAAAOwwHHb6hkAAARfklEQVR4nO2dCX/bth2G6ahxJ2VZd0jr1q12u67dzG5rFrbJLEfi9/9Ww0WKOiiROAjg5fv8GlsWyT9YPsJJEShqAk0R+wRIWCgYHAoGh4LBoWBwKBgcCgaHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgaHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgaHgsFJWXBVaL54FyiB/b/eFsXd78aE3z8W989XI/XsEYscBBd3T0HiCxU6/MOoYy7o60ai4MG0ggNdsTb+q/eDj7mszybSRKQtWF2vTxudhT/8qSg++0pc3VJd47IoRH7Zyp/7H0Xm+f2zOuTu+y+LV6rQLfXhao/65wuFcVncfS3CP6od6g9fytpAJLTbFMsPb+W2n1fF6ycd6T8i8dfvWsGHFM8iqT1EjLbsOdl3YjIQLK09tblEXN6t/FtewrW2aK7m6/fNTjqPabP641BdymDmE/CykoG2rZFGTvG2OaQ8VBVacCfFs0ingk/3nZgMBH/cyN/i4mlRa/nyQf4olrW4mkt5ed8ZTWL7/bv6f+pwtU1e37XKlM/1L+oj0Y1f3H31U93s/KtnHUR/dMTOxdc6PSlYpPCLSVCcRifFS5FMIV4Wl/admLQFd+pgk0nkL2WuUrlLulYKzceh0rm2OV69I3KR2O31T2fxTdPo9Q+m+Pwom8JLKVhn0ntj3NQGTdoqf7YpnkVqBVdNBj7ed2KyENwWjaa4rsTrsvh8c/dUacntblW3xS3t6+O0AFWBH/HL27b43H+rgyjBOucv61awsiODq3jdFM8iNWcqd3rQv0J2BW6RgWDVNtLX21SsohL+56b4+rFYywp2W/QIljndlI2fvtR7/OM0jf3H75qyvnj994+ba4Jl2kpfN8VLke51RlZnfHHfCUlb8KFYO8rB4uL/diWz7+ebpkpuD+leRxHgb80bn757Wxz3t9p6sdTFwNpYHZSDj7rOR5HMmZZF2/Aa0c32Ty6Cu3WwbtbqjKR1Lw+HdAWr4vHgdP/NUUUojrv7i9j4YSXe3jbl6fqi4LM6eFnXPZG04G2TZU/3nZpsBHda0brcU1nNZBbRC/200duPSkL5QXjQ+//hWZbT98+dkYpDI26pw3967KuDz1rRbYpnkdpu0ro5h+N9JyYbwZ1+cNOAaao509PUneUjwdum6/vjWWutPgwwyn3a1z2CO/sd+sFtWieROrX08mzficlHsB7J+ot6KS6iGftQ9dunb4VwNUx1IvhQPqpW7hfvjsca9+pd3biWrejXP1R63OS8Dv7vtzoFc/ghxbNIp4LP9p2WlAUnQ5ngGPNQKHgAFAwOBYNDwSRZKBgcCgaHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgaHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgbHs+CCTEQswX7DkT4oGBwKBoeCwaFgcCgYHAoGh4LhWCwWnb8oGI2F+WegYDAWnZ8SCgZjUcsSmoJBWZgKmIIR0XJZB2NyaDuzFQ3H4tjpERScO1fkSig4a27YrSk4Y64VzAcoOCf6WlJXoOCMaHtBQ+3WFJwTeghjjN2agnNiobLuKL0UnBFno5CDoOA8WDS3EEb6peAsaKrdkfWvhIKTx8JqBwpOGze7NQUnjbPdmoLTxYfdmoITxZPdmoJTxJ/dmoKTYXHoCnmNS8FpYMYwvGZeBQUnQXMfwX9kCk4Cq/sIg6DgJLC6jzAICk4Ak3lD+KXg+CzCVcA1BccmlNcWCo5JaLs1BcdkAr0UHI9J9FJwJIJXvS0UHIHJ7NbBBJdFsdw/FkXx4CUcFFPqDSW4un8Wjpd1vdusPYRDYlq9gQTvH4XW7d1TrVW7hgNiar2BBO82omTevnpfNz/dwqEwXcuqA3NwcJonEiLYrYPXwUq1c7is0bcRIullKzo4MXOvhP3gwCzau4FxoODAHCavikNowdXcW9GR/U6dg8ev9pI5Qb4pOQYW0SGJqlZDwQGJrzeYYNVFEvTUwPMQnILfUAMdhRnf2BazHehIoHiWhBuq1Mx2qDINvSFvNmhmerMhkexbMweHIRm94epgk4XnWQcn5DdUK3q30a3onvwLLTid4lnCfrBvktJLwd5JzC8F+yWt4llCwT5JTi8FeyVBvxTsj/SKZwkF+yJJvRTsizSzb03BnkhVLwX7IV2/FOyBZItnCQW70K6kkC4U7IBepCr2WVyHgu0ZuwhZFCjYnkXzX8pQsD0BJyD0BwU7kIFfCrZnsUi/BqZge5JXq6FgSzLxS8GW5OKXgu3Ixi8F25B+0+oABY8nI70UbEFWfil4NHn5peCxZOaXgseRU/NKQ8FjyE4vBY8iQ78UPIIc/VLwcLL0S8FDya95paHgYWSql4IHkq1fCh5Evn4peAgZ+6Xg2+TavNJQ8C2y1kvBN8ncLwXfIHe/FHyd7P1ScB+LRcTVrDxCwZfJ4amUQVDwRcx6dLFPwwMUfJEsngwdBAVfJIsnQwdBwZdB8RtKcPnqff2yKgq1hrB7uMnJ4snQQYQRrPy+eTpansMh3ORguFUEEbzbrIXkpXyZ5aIcQH5DCX6ozcorOS6rg+Q3VBEtcm+VbQ6m4JvsNq/eqyy87WtlJSwYym+wbtJWL6uz9BRuQrD8sh98CphfCj4BzW9wwVVerWg4v1Pn4KLFSzjf4PllEd0F0C8Fd0D0G0rw/lEXxD01cJKCIf0GElw1ywZntH4wpt8wgnNcARzUr4Xgjr0+OjcJc7nZgOrXQnDvLd4D+eVgWL82RXRfpuxQFeZDkEsdTMHdHFzcaCF3durJv6kJxvXLfrAE2C8F19h+rQSL8vf+ubzZlvaTbnig/Vo1su6eRNtYfbFugnSDg+3Xsh8sOz99NwI9pxsacL+W/WApeEBvyUe6gUH365CDy94ukNd0wwLv174ObscyAqcbFHy/tq3oK08deU43JDPwO+t+8Bz8zlnwLPzajUX3fp09QLrhoOCeHc2NBLdKOL7gefi1L6Ll40dTpBuKmfi1FCwzcb45WE2BFTH9SbEQLKdmcMq9o9L1D8z0G4OwaWQ52x2TrndwpsAahE0RLbKwczs6qmCQKbAGYdnIqgq3kcqogmdVRs+wFT0rvzaCywFfuvOXrn8WKFNgDcJqJMvxRsOodL0zI7mS2Y1Fz8yvbSs629uFc/NrdcNfPa2Q6Q1/Cr65Y/PgUd9TR57T9cvs/Do8fJbjl+7m53deOXiGfudVB1PwsB1zbUXP0e+c+sGz9DsjwfP0O15wVbjeSBqXri9m6ne04ErUvS8rd8MUPBEjBes+klsPaVy6npir37GC9SiH2xjHuHT9MFu/MxE8X78UjM4sBM/Y7ywEz9nveMGHOdtzuZs0a78zGMmat18KRgde8Mz9wgueu190wbP3S8HoYAum37CCr9xXnEQw/QYSPGA4ZArB9FuHysFmqYbIOZiC62BF9G4jvxMQVzD9SoLVweX17/aEF0y/inCNrKpYxxRMv5qAreiX1WfxBNOvIWQ3af/Y/wVbCp4I0IEO+m0ILbhv6Y6wgum3ZeIcfBgA8RKuB/o9AFlEU/ABRMH02yGQYNGAvv7FvICC6bdLGMFVs2zw1OsHz2sWuyEEERxtBfB5TUM5iEC3C9sBjr7vyAcRPLOpoAcBlYNnNhX0IELVwSYLT1sHz2wq6EEEux+sW9G9T4oHqoOZgU/B6gezEX0GlGDKPQdJMP1egILBARJMv5fAEUy/F4ERTL+XoWBwUATTbw8ggum3DwzB9NsLBYMDIZh++0EQTL9XABBMv9egYHDyF0y/V8leMP1eJ3fB9HsDCgYnc8H0e4u8BdPvTbIWTL+3oWBwchZMvwPIWDD9DoGCwclXMP0OIlvB9DuMXAXT70AoGJxMBdPvUPIUTL+DyVIw/Q6HgsHJUTD9jiBDwfQ7hvwE0+8oKBic7ATT7zhyE0y/I8lMMP2OhYLByUsw/Y4mH8Gch9KKbAQv9FyyZCS5COZk7pZkJJhzQdsQSHBVFHrSd19L23Eyd0vCCK7unurdZll7XLuQfu0IIlgvyrF/vH/2mYPZxrIhiOBmWZ3y/tmfYGJFwBwsKJeeBNOvLYHqYKN1t+lbvXCcYPq1JlgrWhfS+0cfgunXnhz6wfTrQAaC6deF0II9NLIo2IWJc3DRMvgQ+nUi+SKaft1IXTD9OhJI8P5RF8Q9NfDgcPTrSqCBjmbZYMf1g+nXmbBDla4rgFOwM0FvNgi2Lt0k+nUn5RxMvx4IVQebLOxSB9OvDwK1oncb3Yruyb9DwtGvF5LtB9OvH1IVTL+eoGBwEhVMv75IUzD9eiNJwfTrjxQF069HEhRMvz6hYHDSE0y/XklOMP36JTXB9OuZxATTr2/SEky/3qFgcJISTL/+SUkw/QYgIcH0G4J0BNNvEJIRTL9hSEKwnECHgsOQgmBOgRWQBARzGsqQpCGY01AGIw3BNQWHIgHBrINDkoJgTkMZkCQEk3BQMDgUDA4Fg0PB4FAwOBQMDgWDE00wmYhIgi3wdwYpRop+UhQcNlL0k6LgsJGinxQFh40U/aQoOGyk6CdFwWEjRT8pCg4bKfpJUXDYSNFPioLDRop+UvEFk6BQMDgUDA4Fg0PB4FAwOBQMDgWDQ8HgUDA4FAwOBYNDweDEEvzya7V86bYo7p6OXoxjL1esXvuIVFdnAWwjSUq1+p9rKL2U4NIlUiTBu41an3YrzlX+O7wYx/5RHFPJK+Aaqa7ECR0HsI0k2arlHZ1Dvbwxx9hHiiN4q1eJ1+vVlsvDi5G8rORyqMKNc6TdZi3PpxPANpKOJgW7h2qWaXaIFEXwtlirU2/9tC/swt09+YkkBXuJVN1/IwS7h6qMSYdIsepgLViVQOJl+8IqVtkJ4BSpEmWfj0jiUFkHu4cqf6ObGA6RogrWlYn42b6wCiUugY9IW3UtPUSS5agU7Bxqt5E1een0v5e/4G3TxnL/qOwf7589RKqEFi+CNeJS5SrYR3GoV5v3VNjL2tw5kjrQTxGt460eci2iPTRoKt0L9tRck9fSvWVkHvD0EEqf1BuXNmRUwe79iKp4UL89dbi2HjpcmtJHN8nHSUUV7DwS8LJaN/FcxxRaI14GOvRIlvtJSZOl00nFFXwYH6ysxvJMaSiPdIwkrqMsVT2ck4mmhioTOCnebACHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgaHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgaHgsGhYHDQBKuJhwY8XbnbPIx6Xz7A2G7Z/dH2kaXpARO8VY9qlbcfz+oX2UfVeWZzqx4tywIwwfrJWTlbzg1GCz46oJObUwdL8JFZ8+jly+qvothev6zkXy9vvl+puVaUr6qZJq+Wu6nd5fv6odT18Xb5vOtuI0OpZ+yzycJYgvWMLBqZmdW8SCs1G57wo6ZAEH62jUi1VRtUD9OLDU1GlbMkdLercLuNDNU8h50HYIJVRlRtLNUQktqUIvPjQfsS+U+IVJPbNU+iN/OaGMHywKPt6g/1Q30U9OQKOYAmuFYTlJr8tVWlciuknWJF5D8hUudCo8pMnmkEy/mU6pPtD8c/1hdSThFAwbWa+05WoK/+vToV/MbMMyUFN7PhqEPUvLUPRrAuhrvbVQAKjk1TcjazV75cFXxWj5bq/WZul6PtzMFJ0LSi5eRwaiq98yJaTUNk6uDTetS8qQrok46RqYMbwayDI2HmaRadG91MMi86guU0RJ1WdDMo0sxR1L5f10fbTSu6EcxWdCzUUKW6+mq+obJTVmvBf1b94UM/uBnW3OrjxPuqNlZ179F21Q9uj2Q/OE3si9aTAjuXEpqCB8Ox6BxwEMy7SSRFKBgcCgaHgsGhYHAoGBwKBoeCwaFgcCgYHAoGh4LBoWBwKBgcCgaHgsGhYHAoGBwKBoeCwaFgcP4P6NV3GY9sv9YAAAAASUVORK5CYII=" /><!-- --></p>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2>Acknowledgements</h2>
+<p>Special thanks to Tingting Zhan for discovering a bug in <span class="math inline">\(\texttt{computePowerBySampleSize}\)</span>.</p>
+</div>
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p>Please cite ‘’W.J. Artman, I. Nahum-Shani, T. Wu, J.R. Mckay, and A. Ertefaie. Power analysis in a SMART design: sample size estimation for determining the best embedded dynamic treatment regime. Biostatistics, 2018.’’ if you use this package.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

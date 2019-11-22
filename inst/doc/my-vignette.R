@@ -1,11 +1,11 @@
-## ----setup, include = FALSE----------------------------------------------
+## ---- include = FALSE----------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ---- message = FALSE, results = 'hide', include = FALSE-----------------
-library("smartsizer")
+## ----setup---------------------------------------------------------------
+library(smartsizer)
 
 ## ------------------------------------------------------------------------
 V1 <- diag(6)

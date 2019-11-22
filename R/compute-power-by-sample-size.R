@@ -27,7 +27,7 @@
 #' #                         sample_size_grid = seq(50,300, 50))
 #' @export
 computePowerBySampleSize <- function(V, Delta, min_Delta, alpha = 0.05, sample_size_grid) {
-  mc_list <- simulateNormal(V, n_sim = 1000)
+  mc_list <- simulateNormal(diag(1,nrow(V)), n_sim = 500)
   mc_list_SVD <- ComputeSVD(V, mc_list)
   c_alpha <- computeC(V, mc_list_SVD, alpha) #indep. of n
   sapply(sample_size_grid, function(x) computePowerForGrid(V, Delta, min_Delta, c_alpha, x, mc_list = mc_list_SVD))

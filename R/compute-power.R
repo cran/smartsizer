@@ -73,7 +73,7 @@ computePower <- function(V, Delta, min_Delta, alpha = 0.05, sample_size) {
     return(power)
   }
 
-  mc_list <- simulateNormal(V, n_sim = 1000) #from internal.R
+  mc_list <- simulateNormal(V, n_sim = 500) #from internal.R
   c_alpha <- computeC(V, mc_list, alpha) #from internal.R
   avg_power <- 0
   for (i in 1:500) { #average the power over 500 sets of 1000 individuals for numerical stability
