@@ -1,4 +1,4 @@
-614345c158395244d58d41299f644055 *DESCRIPTION
+f73b054eb803d600b2b3de0b75e74894 *DESCRIPTION
 dcfb49e832b89e40b7f379fa9ab8796a *NAMESPACE
 b440ee196ef3a4aa4a4e22742361b8a0 *R/compute-power-by-sample-size.R
 3debf293c53a81ab2e33fd12d73081fd *R/compute-power.R
@@ -6,10 +6,10 @@ cd0fa36761eda622b08f200d12682fb9 *R/compute-sample-size.R
 824c14a791d29f345e30da668ae1c0a1 *R/internal.R
 2912a511134abaae2b5d6b4e8ee7eb78 *R/plot-power-by-n.R
 0a55773c07a81c2d4e220dbe7f0883ba *R/smartsizer.R
-a2bde4c69201c4a82beb573dd179a24e *build/vignette.rds
-b3c9554120dd45a2cb94accf99c6c309 *inst/doc/my-vignette.R
-a7c119d95f96d6442a09099af20d5240 *inst/doc/my-vignette.Rmd
-3c0a3e3cb79dc46c251d3acc19aeaf26 *inst/doc/my-vignette.html
+5d9afb4fca17dea07e49505df371c22a *build/vignette.rds
+79da66e7ddb0cdbb9c9f7a0384c6d866 *inst/doc/my-vignette.R
+414a1c16f8476e3f25ff0ea4fdc3cd46 *inst/doc/my-vignette.Rmd
+565a1e57a6ebc65a4abcb7080031c5ef *inst/doc/my-vignette.html
 4f628d2487b1248a9f5ca78dfda1c05e *man/computePower.Rd
 ebbd3bee63927fc6d3babf093f0ed72c *man/computePowerBySampleSize.Rd
 f02a18b0881a496c2a5b78b9b88b6a3e *man/computeSampleSize.Rd
@@ -17,4 +17,4 @@ f02a18b0881a496c2a5b78b9b88b6a3e *man/computeSampleSize.Rd
 49dac65519e86c5ed9625fb9952a775e *man/smartsizer.Rd
 9dadf1f17b2d23e15e751f066406605d *tests/testthat.R
 b80a4f97b22c7a6ac243a6d01fd8f4aa *tests/testthat/tests.R
-a7c119d95f96d6442a09099af20d5240 *vignettes/my-vignette.Rmd
+414a1c16f8476e3f25ff0ea4fdc3cd46 *vignettes/my-vignette.Rmd

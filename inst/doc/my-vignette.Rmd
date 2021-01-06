@@ -25,9 +25,7 @@ The $\texttt{smartsizer}$ package is designed to assist investigators who are pl
 
 Using $\texttt{smartsizer}$, investigators may perform power analyses for an arbitrary type of SMART.
 
-$\textbf{Note:}$ there is a Shiny app available implementing the basic functionalities of this package: https://wilart.shinyapps.io/smartsizer-power-sample-size/.
-
-Details on the methodology and guidelines for choosing the covariance matrix are available in ''W.J. Artman, I. Nahum-Shani, T. Wu, J.R. Mckay, and A. Ertefaie. Power analysis in a SMART design: sample size estimation for determining the best embedded dynamic treatment regime. Biostatistics, 2018'' (https://doi.org/10.1093/biostatistics/kxy064).
+Details on the methodology and guidelines for choosing the covariance matrix are available in ''W.J. Artman, I. Nahum-Shani, T. Wu, J.R. Mckay, and A. Ertefaie. Power analysis in a SMART design: sample size estimation for determining the best embedded dynamic treatment regime. Biostatistics, 2018''.
 
 # Power Calculation
 The $\texttt{computePower}$ function computes the power as a function of the given covariance matrix, effect sizes, type I error rate, and sample size. The power is the probability of excluding from the set of best all embedded DTR (EDTR) which are inferior to the true best DTR by $\Delta_{\mathrm{min}}$ or more.   
